@@ -1,5 +1,5 @@
 # Percona XtraDB Cluster
-## _Install Percoba XtraDB Cluster on Ubuntu 20.04_
+## _Install Percona XtraDB Cluster on Ubuntu 20.04_
 ----------------
 ## Prerequisites
 - Three Ubuntu server using OS version 20.04
@@ -8,11 +8,13 @@
 
 ## Scenario
 
-| Server Name  | IP Server |
-| ------------- | ------------- |
-| DB01  | 172.16.80.35  |
-| DB02  | 172.16.80.36  |
-| DB03  | 172.16.80.37  |
+| Server Name  | IP Server | Node |
+| ------------- | ------------- |------|
+| DB01  | 172.16.80.35  | pxc1 |
+| DB02  | 172.16.80.36  | pxc2 |
+| DB03  | 172.16.80.37  | pxc3 |
+
+Cluster Name : pxc-cluster
 
 > Note: Server and IP adapted to your environment
 
@@ -87,27 +89,38 @@ show status like 'wsrep%';
 ```
 >Note: Make sure the output like picture below.
 
+<img width="385" alt="image" src="https://user-images.githubusercontent.com/103473029/162886266-15609324-34dd-4fa2-a5fe-d6f178d4fc17.png">
+
+
 Run this command on server DB02 as a node 2 to join the cluster.
 
 ```sh
 sudo systemctl start mysql
+mysql -u root -p
+show status like 'wsrep%';
 ```
 >Note: Make sure the output like picture below.
+
+<img width="476" alt="image" src="https://user-images.githubusercontent.com/103473029/162886367-8e1d31bd-a2da-4363-8dc1-5af647f32963.png">
+
 
 Run this command on server DB03 as a node 3 to join the cluster.
 
 ```sh
 sudo systemctl start mysql
+mysql -u root -p
+show status like 'wsrep%';
 ```
 >Note: Make sure the output like picture below.
 
+<img width="383" alt="image" src="https://user-images.githubusercontent.com/103473029/162886417-b6bc2f8e-d913-4343-a803-30f79a88a97d.png">
 
+When you add all nodes to the cluster, you can verify replication by running queries and manipulating data on nodes to see if these changes are synchronized accross the cluster.
 
 ## References
+https://www.percona.com/doc/percona-xtradb-cluster/LATEST/install/apt.html
 
-MIT
 
-**Free Software, Hell Yeah!**
 
 [//]: # (These are reference links used in the body of this note and get stripped out when the markdown processor does its job. There is no need to format nicely because it shouldn't be seen. Thanks SO - http://stackoverflow.com/questions/4823468/store-comments-in-markdown-syntax)
 
